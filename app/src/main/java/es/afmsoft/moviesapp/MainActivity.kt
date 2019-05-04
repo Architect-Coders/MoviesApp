@@ -14,26 +14,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : CoroutineScopeActivity() {
 
-    private val authInterceptor = Interceptor { chain ->
-        val newUrl = chain.request().url()
-            .newBuilder()
-            .addQueryParameter("api_key", "8979fea4ecc57850778fa624133234d8")
-            .build()
-
-        val newRequest = chain.request()
-            .newBuilder()
-            .url(newUrl)
-            .build()
-
-        chain.proceed(newRequest)
-    }
-
     private val adapter = MoviesAdapter {
         //TODO Start detail activity
     }
 
     private val tmdbClient = OkHttpClient().newBuilder()
-        .addInterceptor(authInterceptor)
+        .addInterceptor(ServiceInterceptor())
         .build()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,11 +36,7 @@ class MainActivity : CoroutineScopeActivity() {
         val moviesService = retrofit.create(MoviesService::class.java)
 
         launch {
-            val request = withContext(Dispatchers.IO) {
-                moviesService.discoverMovies(2019)
-            }
-
-            val response = request.await()
+            val response = moviesService.discoverMovies(2019).await()
             if (response.isSuccessful) {
                 Toast.makeText(this@MainActivity, "Petición correcta", Toast.LENGTH_LONG).show()
                 val movies = response.body()!!
