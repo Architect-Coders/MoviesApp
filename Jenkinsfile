@@ -26,9 +26,17 @@ pipeline {
     }
     stage('Static analysis') {
       steps {
+        // Run Lint and analyse the results
         sh 'sh gradlew lintDebug'
-        androidLint(pattern: '**/lint-results-*.xml')
-        sh 'sh gradlew detekt'
+        sh 'sh gradlew :app:detekt'
+      }
+
+      post {
+        always {
+          // Analyse the test results and update the build result as appropriate
+          recordIssues(tools: [detekt(pattern: '**/detekt.xml')])
+          androidLint pattern: '**/lint-results-*.xml'
+        }
       }
     }
     stage('Deploy') {
