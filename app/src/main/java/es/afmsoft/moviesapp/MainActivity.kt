@@ -65,7 +65,7 @@ class MainActivity : CoroutineScopeActivity() {
         launch {
 
             var countryCode = getLastLocation()
-            val response = moviesService.discoverMovies(2019).await()
+            val response = moviesService.discoverMovies(2019, countryCode).await()
             if (response.isSuccessful) {
                 Toast.makeText(this@MainActivity, "Petición correcta", Toast.LENGTH_LONG).show()
                 val movies = response.body()!!
