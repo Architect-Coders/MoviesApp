@@ -11,17 +11,17 @@ import androidx.annotation.LayoutRes
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
-fun ViewGroup.inflate(@LayoutRes layoutRes : Int, attachToRoot : Boolean = true) : View =
+fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = true): View =
         LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
 
-fun ImageView.loadUrl(url : String) {
+fun ImageView.loadUrl(url: String) {
     Glide.with(context)
         .load(url)
         .diskCacheStrategy(DiskCacheStrategy.ALL)
         .into(this)
 }
 
-inline fun <reified T: Activity> Context.intentFor(body: Intent.() -> Unit) : Intent =
+inline fun <reified T : Activity> Context.intentFor(body: Intent.() -> Unit): Intent =
     Intent(this, T::class.java).apply(body)
 
 inline fun <reified T : Activity> Context.startActivity(body: Intent.() -> Unit) {
