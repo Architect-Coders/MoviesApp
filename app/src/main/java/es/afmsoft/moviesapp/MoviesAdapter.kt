@@ -5,9 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import es.afmsoft.moviesapp.model.Movie
 import kotlinx.android.synthetic.main.movie_item.view.*
-import java.util.zip.Inflater
 
-class MoviesAdapter(private val listener : (Movie) -> Unit): RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
+class MoviesAdapter(private val listener: (Movie) -> Unit) : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
     var movies = emptyList<Movie>()
 
@@ -16,7 +15,7 @@ class MoviesAdapter(private val listener : (Movie) -> Unit): RecyclerView.Adapte
         return ViewHolder(view)
     }
 
-    override fun getItemCount() : Int = movies.size
+    override fun getItemCount(): Int = movies.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = movies[position]
