@@ -14,7 +14,7 @@ class MoviesRepository(application: MoviesApp) {
 
     suspend fun discoverMovies(year: Int, countryCode: String) = withContext(Dispatchers.IO) {
         with(db.movieDao()) {
-            if (moviesCount() <= 10) {
+            if (moviesCount() <= MIN_MOVIES_TO_RECOVER) {
 
                 val response = MovieServer.service.discoverMoviesAsync(year, countryCode).await()
                 if (response.isSuccessful) {
@@ -27,6 +27,10 @@ class MoviesRepository(application: MoviesApp) {
             }
             getAll().map(DbMovie::convertToUiMovie)
         }
+    }
+
+    companion object {
+        const val MIN_MOVIES_TO_RECOVER = 10
     }
 }
 

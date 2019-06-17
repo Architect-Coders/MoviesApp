@@ -28,7 +28,6 @@ class MoviesAdapter(private val listener: (Movie) -> Unit) : RecyclerView.Adapte
         val movie = movies[position]
         holder.bind(movie)
         holder.itemView.setOnClickListener { listener(movie) }
-
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
