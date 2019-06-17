@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import es.afmsoft.moviesapp.R
 import es.afmsoft.moviesapp.inflate
 import es.afmsoft.moviesapp.loadUrl
-import es.afmsoft.moviesapp.model.Movie
+import es.afmsoft.moviesapp.ui.model.Movie
 import kotlinx.android.synthetic.main.movie_item.view.*
 
 class MoviesAdapter(private val listener: (Movie) -> Unit) : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
@@ -28,7 +28,6 @@ class MoviesAdapter(private val listener: (Movie) -> Unit) : RecyclerView.Adapte
         val movie = movies[position]
         holder.bind(movie)
         holder.itemView.setOnClickListener { listener(movie) }
-
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

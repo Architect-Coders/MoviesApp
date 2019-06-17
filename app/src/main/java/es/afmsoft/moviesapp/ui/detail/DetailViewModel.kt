@@ -3,7 +3,7 @@ package es.afmsoft.moviesapp.ui.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import es.afmsoft.moviesapp.model.Movie
+import es.afmsoft.moviesapp.ui.model.Movie
 
 class DetailViewModel(private val movie: Movie) : ViewModel() {
 
@@ -15,6 +15,7 @@ class DetailViewModel(private val movie: Movie) : ViewModel() {
         }
 
     private fun refresh() {
+        _model.value = UiModel.Loading
         _model.value = UiModel.Content(movie)
     }
 
@@ -22,5 +23,4 @@ class DetailViewModel(private val movie: Movie) : ViewModel() {
         object Loading : UiModel()
         class Content(val movie: Movie) : UiModel()
     }
-
 }

@@ -6,9 +6,15 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import es.afmsoft.moviesapp.*
-import es.afmsoft.moviesapp.ui.main.MoviesListViewModel.UiModel
+import es.afmsoft.moviesapp.LocationRepository
+import es.afmsoft.moviesapp.PermissionRequester
+import es.afmsoft.moviesapp.R
+import es.afmsoft.moviesapp.app
+import es.afmsoft.moviesapp.getViewModel
+import es.afmsoft.moviesapp.model.MoviesRepository
+import es.afmsoft.moviesapp.startActivity
 import es.afmsoft.moviesapp.ui.detail.DetailActivity
+import es.afmsoft.moviesapp.ui.main.MoviesListViewModel.UiModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -17,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.onMovieClicked(it)
     }
 
-    lateinit var viewModel: MoviesListViewModel
+    private lateinit var viewModel: MoviesListViewModel
     private lateinit var locationRepository: LocationRepository
     private val coarsePermissionRequester = PermissionRequester(this, ACCESS_COARSE_LOCATION)
 
@@ -25,11 +31,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewModel = getViewModel { MoviesListViewModel() }
+        viewModel = getViewModel { MoviesListViewModel(MoviesRepository((app))) }
 
         locationRepository = LocationRepository(this)
 
-        moviesGrid.layoutManager = GridLayoutManager(this, 3)
+        moviesGrid.layoutManager = GridLayoutManager(this, MOVIES_PER_ROW)
         moviesGrid.adapter = adapter
 
         viewModel.model.observe(this, Observer(::updateUi))
@@ -39,10 +45,15 @@ class MainActivity : AppCompatActivity() {
 
         progressBar.visibility = if (model is UiModel.Loading) View.VISIBLE else View.GONE
 
-        when(model) {
+        when (model) {
             is UiModel.Content -> adapter.movies = model.movies
             is UiModel.Navigation -> startActivity<DetailActivity> { putExtra(DetailActivity.MOVIE, model.movie) }
-            is UiModel.RequestLocationPermission -> coarsePermissionRequester.request { viewModel.onCoarsePermissionRequested() }
+            is UiModel.RequestLocationPermission ->
+                coarsePermissionRequester.request { viewModel.onCoarsePermissionRequested() }
         }
+    }
+
+    companion object {
+        const val MOVIES_PER_ROW = 3
     }
 }

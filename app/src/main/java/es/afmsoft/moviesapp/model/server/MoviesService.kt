@@ -1,6 +1,5 @@
-package es.afmsoft.moviesapp
+package es.afmsoft.moviesapp.model.server
 
-import es.afmsoft.moviesapp.model.MoviesResult
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.GET

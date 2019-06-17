@@ -1,4 +1,4 @@
-package es.afmsoft.moviesapp.model
+package es.afmsoft.moviesapp.model.server
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
@@ -30,4 +30,3 @@ data class Movie(
     val video: Boolean,
     @SerializedName("vote_average") val voteAverage: Double
 ) : Parcelable
-
