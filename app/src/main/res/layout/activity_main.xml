@@ -5,9 +5,18 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".ui.main.MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" android:id="@+id/moviesGrid"/>
+            android:layout_height="match_parent" android:id="@+id/moviesGrid">
+    </androidx.recyclerview.widget.RecyclerView>
+    <ProgressBar
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar" app:layout_constraintEnd_toEndOf="@+id/moviesGrid"
+            app:layout_constraintStart_toStartOf="@+id/moviesGrid" android:layout_marginStart="8dp"
+            app:layout_constraintTop_toTopOf="@+id/moviesGrid" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/moviesGrid"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
