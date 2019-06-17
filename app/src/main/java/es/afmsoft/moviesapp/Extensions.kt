@@ -45,3 +45,6 @@ inline fun <reified T : ViewModel> FragmentActivity.getViewModel(crossinline fac
 
     return ViewModelProviders.of(this, vmFactory)[T::class.java]
 }
+
+val Context.app: MoviesApp
+    get() = applicationContext as MoviesApp

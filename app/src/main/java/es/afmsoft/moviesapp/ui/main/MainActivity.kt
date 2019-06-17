@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import es.afmsoft.moviesapp.*
+import es.afmsoft.moviesapp.model.MoviesRepository
 import es.afmsoft.moviesapp.ui.main.MoviesListViewModel.UiModel
 import es.afmsoft.moviesapp.ui.detail.DetailActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewModel = getViewModel { MoviesListViewModel() }
+        viewModel = getViewModel { MoviesListViewModel(MoviesRepository((app))) }
 
         locationRepository = LocationRepository(this)
 

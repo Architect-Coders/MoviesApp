@@ -1,4 +1,4 @@
-package es.afmsoft.moviesapp
+package es.afmsoft.moviesapp.model.server
 
 import okhttp3.Interceptor
 import okhttp3.Response

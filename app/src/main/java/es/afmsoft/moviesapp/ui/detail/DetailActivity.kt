@@ -7,8 +7,8 @@ import androidx.lifecycle.Observer
 import es.afmsoft.moviesapp.R
 import es.afmsoft.moviesapp.getViewModel
 import es.afmsoft.moviesapp.loadUrl
-import es.afmsoft.moviesapp.model.Movie
-import es.afmsoft.moviesapp.ui.detail.DetailViewModel.UiModel;
+import es.afmsoft.moviesapp.ui.detail.DetailViewModel.UiModel
+import es.afmsoft.moviesapp.ui.model.Movie
 import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : AppCompatActivity() {
@@ -27,11 +27,10 @@ class DetailActivity : AppCompatActivity() {
         modelView.model.observe(this, Observer(::updateUI))
     }
 
-    private fun updateUI (model: UiModel) {
-
-        when(model) {
+    private fun updateUI(model: UiModel) {
+        when (model) {
             is UiModel.Content -> with(model.movie) {
-                main_backdrop.loadUrl("https://image.tmdb.org/t/p/w1280/${backdropPath}")
+                main_backdrop.loadUrl("https://image.tmdb.org/t/p/w1280/$backdropPath")
                 supportActionBar?.title = title
             }
         }
@@ -45,6 +44,6 @@ class DetailActivity : AppCompatActivity() {
     }
 
     companion object {
-        val MOVIE = "Movie"
+        const val MOVIE = "Movie"
     }
 }

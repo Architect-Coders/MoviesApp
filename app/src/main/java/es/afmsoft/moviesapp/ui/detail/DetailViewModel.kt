@@ -3,7 +3,7 @@ package es.afmsoft.moviesapp.ui.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import es.afmsoft.moviesapp.model.Movie
+import es.afmsoft.moviesapp.ui.model.Movie
 
 class DetailViewModel(private val movie: Movie) : ViewModel() {
 
