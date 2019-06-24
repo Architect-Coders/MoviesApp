@@ -15,7 +15,7 @@
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/main.collapsing"
+            android:id="@+id/movieDetailCollapsing"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
@@ -25,14 +25,15 @@
             app:expandedTitleMarginEnd="64dp">
 
             <ImageView
-                android:id="@+id/main.backdrop"
+                android:id="@+id/movieDetailImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax"/>
+
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/main.toolbar"
+                android:id="@+id/movieDetailToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"

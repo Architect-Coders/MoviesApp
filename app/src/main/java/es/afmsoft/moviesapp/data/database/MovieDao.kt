@@ -1,4 +1,4 @@
-package es.afmsoft.moviesapp.model.database
+package es.afmsoft.moviesapp.data.database
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -10,6 +10,9 @@ import androidx.room.Query
 interface MovieDao {
     @Query("select * from movie")
     fun getAll(): List<Movie>
+
+    @Query("select * from movie where id = :movieId")
+    fun getMovie(movieId: Int): Movie?
 
     @Query("select count(id) from movie")
     fun moviesCount(): Int

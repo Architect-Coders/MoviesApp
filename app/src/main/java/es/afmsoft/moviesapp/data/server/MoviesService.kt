@@ -1,4 +1,4 @@
-package es.afmsoft.moviesapp.model.server
+package es.afmsoft.moviesapp.data.server
 
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
