@@ -3,13 +3,12 @@ package es.afmsoft.moviesapp.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import es.afmsoft.moviesapp.MoviesApp
-import es.afmsoft.moviesapp.model.MoviesRepository
+import es.afmsoft.domain.Movie
 import es.afmsoft.moviesapp.Scope
-import es.afmsoft.moviesapp.ui.model.Movie
+import es.afmsoft.usecases.GetPopularMovies
 import kotlinx.coroutines.launch
 
-class MoviesListViewModel(private val moviesRepository :MoviesRepository) : ViewModel(),
+class MoviesListViewModel(private val getPopularMovies: GetPopularMovies) : ViewModel(),
     Scope by Scope.Impl {
 
     private val _model = MutableLiveData<UiModel>()
@@ -20,15 +19,13 @@ class MoviesListViewModel(private val moviesRepository :MoviesRepository) : View
     }
 
     private fun refresh() {
-
         _model.value = UiModel.RequestLocationPermission
     }
 
     fun onCoarsePermissionRequested() {
         launch {
             _model.value = UiModel.Loading
-            val movies = moviesRepository.discoverMovies(2019, "es")
-            _model.value = UiModel.Content(movies)
+            _model.value = UiModel.Content(getPopularMovies.invoke())
         }
     }
 

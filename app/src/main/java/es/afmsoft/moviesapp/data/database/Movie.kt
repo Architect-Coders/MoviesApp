@@ -1,4 +1,4 @@
-package es.afmsoft.moviesapp.model.database
+package es.afmsoft.moviesapp.data.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

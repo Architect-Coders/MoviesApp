@@ -6,16 +6,24 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import es.afmsoft.moviesapp.LocationRepository
+import es.afmsoft.data.repository.MoviesRepository
+import es.afmsoft.data.repository.RegionRepository
 import es.afmsoft.moviesapp.PermissionRequester
 import es.afmsoft.moviesapp.R
 import es.afmsoft.moviesapp.app
+import es.afmsoft.moviesapp.data.AndroidPermissionChecker
+import es.afmsoft.moviesapp.data.GpsLocationDataSource
+import es.afmsoft.moviesapp.data.database.RoomDataSource
+import es.afmsoft.moviesapp.data.server.ServerDataSource
 import es.afmsoft.moviesapp.getViewModel
-import es.afmsoft.moviesapp.model.MoviesRepository
 import es.afmsoft.moviesapp.startActivity
 import es.afmsoft.moviesapp.ui.detail.DetailActivity
+import es.afmsoft.moviesapp.ui.detail.DetailViewModel
 import es.afmsoft.moviesapp.ui.main.MoviesListViewModel.UiModel
+import es.afmsoft.usecases.GetPopularMovies
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.androidx.scope.currentScope
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,17 +31,12 @@ class MainActivity : AppCompatActivity() {
         viewModel.onMovieClicked(it)
     }
 
-    private lateinit var viewModel: MoviesListViewModel
-    private lateinit var locationRepository: LocationRepository
+    private val viewModel: MoviesListViewModel by currentScope.viewModel(this)
     private val coarsePermissionRequester = PermissionRequester(this, ACCESS_COARSE_LOCATION)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        viewModel = getViewModel { MoviesListViewModel(MoviesRepository((app))) }
-
-        locationRepository = LocationRepository(this)
 
         moviesGrid.layoutManager = GridLayoutManager(this, MOVIES_PER_ROW)
         moviesGrid.adapter = adapter
@@ -47,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
         when (model) {
             is UiModel.Content -> adapter.movies = model.movies
-            is UiModel.Navigation -> startActivity<DetailActivity> { putExtra(DetailActivity.MOVIE, model.movie) }
+            is UiModel.Navigation -> startActivity<DetailActivity> { putExtra(DetailActivity.MOVIE, model.movie.id) }
             is UiModel.RequestLocationPermission ->
                 coarsePermissionRequester.request { viewModel.onCoarsePermissionRequested() }
         }
