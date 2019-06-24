@@ -3,10 +3,10 @@ package es.afmsoft.moviesapp.ui.main
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import es.afmsoft.domain.Movie
 import es.afmsoft.moviesapp.R
 import es.afmsoft.moviesapp.inflate
 import es.afmsoft.moviesapp.loadUrl
-import es.afmsoft.moviesapp.ui.model.Movie
 import kotlinx.android.synthetic.main.movie_item.view.*
 
 class MoviesAdapter(private val listener: (Movie) -> Unit) : RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
@@ -33,7 +33,7 @@ class MoviesAdapter(private val listener: (Movie) -> Unit) : RecyclerView.Adapte
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(movie: Movie) {
             itemView.movieTitle.text = movie.title
-            itemView.moviePoster.loadUrl("https://image.tmdb.org/t/p/w185/${movie.posterPath}")
+            itemView.moviePoster.loadUrl("https://image.tmdb.org/t/p/w185/${movie.backdropPath}")
         }
     }
 }

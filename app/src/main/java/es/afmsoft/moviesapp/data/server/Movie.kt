@@ -1,4 +1,4 @@
-package es.afmsoft.moviesapp.model.server
+package es.afmsoft.moviesapp.data.server
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

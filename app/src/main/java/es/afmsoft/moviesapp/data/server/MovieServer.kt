@@ -1,4 +1,4 @@
-package es.afmsoft.moviesapp.model.server
+package es.afmsoft.moviesapp.data.server
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
