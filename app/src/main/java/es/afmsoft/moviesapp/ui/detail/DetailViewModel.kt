@@ -3,7 +3,6 @@ package es.afmsoft.moviesapp.ui.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import es.afmsoft.data.repository.MoviesRepository
 import es.afmsoft.domain.Movie
 import es.afmsoft.moviesapp.Scope
 import es.afmsoft.usecases.GetMovie
@@ -24,7 +23,6 @@ class DetailViewModel(private val movieId: Int, private val getMovie: GetMovie) 
         _model.value = UiModel.Loading
         _model.value = UiModel.Content(getMovie.invoke(movieId))
     }
-
 
     init {
         initScope()
