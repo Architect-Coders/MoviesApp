@@ -28,7 +28,7 @@ class RoomDataSource(db: MovieDatabase) : LocalDataSource {
 }
 
 private fun Movie.convertToBdMovie() =
-    MovieDb(0, title, backdropPath, posterPath)
+    MovieDb(0, title, backdropPath, posterPath, favourite)
 
 private fun MovieDb.convertToDomainMovie() =
-    Movie(id, title!!, posterPath, backdropPath)
+    Movie(id, title!!, posterPath, backdropPath, favourite)
