@@ -18,6 +18,12 @@ class RoomDataSource(db: MovieDatabase) : LocalDataSource {
         movieDao.insertMovies(movies.map(Movie::convertToBdMovie))
     }
 
+    override suspend fun update(movie: Movie) {
+        withContext(Dispatchers.IO) {
+            movieDao.updateMovie(movie.convertToBdMovie())
+        }
+    }
+
     override suspend fun isEmpty() = withContext(Dispatchers.IO) {
         movieDao.moviesCount() == 0
     }
@@ -28,7 +34,7 @@ class RoomDataSource(db: MovieDatabase) : LocalDataSource {
 }
 
 private fun Movie.convertToBdMovie() =
-    MovieDb(0, title, backdropPath, posterPath, favourite)
+    MovieDb(id, title, backdropPath, posterPath, favourite)
 
 private fun MovieDb.convertToDomainMovie() =
-    Movie(id, title!!, posterPath, backdropPath, favourite)
+    Movie(id, title!!, backdropPath, posterPath, favourite)

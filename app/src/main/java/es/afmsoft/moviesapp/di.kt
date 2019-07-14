@@ -18,6 +18,7 @@ import es.afmsoft.moviesapp.ui.main.MainActivity
 import es.afmsoft.moviesapp.ui.main.MoviesListViewModel
 import es.afmsoft.usecases.GetMovie
 import es.afmsoft.usecases.GetPopularMovies
+import es.afmsoft.usecases.ToggleFavouriteMovie
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -55,7 +56,8 @@ private val scopesModule = module {
     }
 
     scope(named<DetailActivity>()) {
-        viewModel { (id: Int) -> DetailViewModel(id, get()) }
+        viewModel { (id: Int) -> DetailViewModel(id, get(), get()) }
         scoped {  GetMovie(get()) }
+        scoped {  ToggleFavouriteMovie(get()) }
     }
 }
