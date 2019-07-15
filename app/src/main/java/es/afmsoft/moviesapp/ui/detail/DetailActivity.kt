@@ -35,10 +35,13 @@ class DetailActivity : AppCompatActivity() {
         model.movie?.let {
             movieDetailImage.loadUrl("https://image.tmdb.org/t/p/w780/${it.backdropPath}")
             movieDetailCollapsing.title = it.title
+            movieDetailDescription.text = it.overview
+            movieDetailToggleFavourite.hide()
             movieDetailToggleFavourite.setImageResource(if (it.favourite)
                 R.drawable.baseline_star_white_48
             else
                 R.drawable.baseline_star_border_white_48)
+            movieDetailToggleFavourite.show()
         }
     }
 

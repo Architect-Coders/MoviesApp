@@ -10,5 +10,6 @@ data class Movie(
     @ColumnInfo(name = "title") val title: String?,
     @ColumnInfo(name = "backdrop_path") val backdropPath: String?,
     @ColumnInfo(name = "poster_path") val posterPath: String?,
-    val favourite: Boolean
+    val favourite: Boolean,
+    val overview: String
 )

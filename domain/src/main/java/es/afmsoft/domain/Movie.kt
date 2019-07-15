@@ -5,5 +5,6 @@ data class Movie(
     val title: String?,
     val backdropPath: String?,
     val posterPath: String?,
-    val favourite: Boolean
+    val favourite: Boolean,
+    val overview: String
 )

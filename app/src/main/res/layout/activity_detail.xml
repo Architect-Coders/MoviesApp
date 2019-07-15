@@ -47,10 +47,11 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <TextView
+            android:id="@+id/movieDetailDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lineSpacingExtra="8dp"
-            android:maxLines="2"
+            android:maxLines="20"
             android:padding="8dp"
             android:text="Esto es un texto de prueba"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"

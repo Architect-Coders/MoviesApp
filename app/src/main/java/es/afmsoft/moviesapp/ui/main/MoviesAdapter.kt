@@ -34,6 +34,7 @@ class MoviesAdapter(private val listener: (Movie) -> Unit) : RecyclerView.Adapte
         fun bind(movie: Movie) {
             itemView.movieTitle.text = movie.title
             itemView.moviePoster.loadUrl("https://image.tmdb.org/t/p/w185/${movie.posterPath}")
+            itemView.imgFavouriteMovie.visibility = if (movie.favourite) View.VISIBLE else View.GONE
         }
     }
 }
