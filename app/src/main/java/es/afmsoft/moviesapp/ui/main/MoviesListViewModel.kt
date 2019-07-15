@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import es.afmsoft.domain.Movie
 import es.afmsoft.moviesapp.Scope
+import es.afmsoft.moviesapp.ScopedViewModel
 import es.afmsoft.usecases.GetPopularMovies
 import kotlinx.coroutines.launch
 
-class MoviesListViewModel(private val getPopularMovies: GetPopularMovies) : ViewModel(),
-    Scope by Scope.Impl {
+class MoviesListViewModel(private val getPopularMovies: GetPopularMovies) : ScopedViewModel() {
 
     private val _model = MutableLiveData<UiModel>()
     val model: LiveData<UiModel>
@@ -27,15 +27,6 @@ class MoviesListViewModel(private val getPopularMovies: GetPopularMovies) : View
             _model.value = UiModel.Loading
             _model.value = UiModel.Content(getPopularMovies.invoke())
         }
-    }
-
-    init {
-        initScope()
-    }
-
-    override fun onCleared() {
-        closeScope()
-        super.onCleared()
     }
 
     fun onMovieClicked(movie: Movie) {

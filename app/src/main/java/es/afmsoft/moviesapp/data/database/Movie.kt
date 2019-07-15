@@ -9,5 +9,7 @@ data class Movie(
     @PrimaryKey(autoGenerate = true) val id: Int,
     @ColumnInfo(name = "title") val title: String?,
     @ColumnInfo(name = "backdrop_path") val backdropPath: String?,
-    @ColumnInfo(name = "poster_path") val posterPath: String?
+    @ColumnInfo(name = "poster_path") val posterPath: String?,
+    val favourite: Boolean,
+    val overview: String
 )

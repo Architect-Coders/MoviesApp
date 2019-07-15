@@ -1,10 +1,6 @@
 package es.afmsoft.moviesapp.data.database
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface MovieDao {
@@ -19,6 +15,9 @@ interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertMovies(movies: List<Movie>)
+
+    @Update
+    fun updateMovie(movie: Movie)
 
     @Delete
     fun delete(movie: Movie)

@@ -8,10 +8,13 @@ import kotlinx.coroutines.SupervisorJob
 
 interface Scope : CoroutineScope {
 
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
+    class Impl : Scope {
+        override lateinit var job: Job
+    }
 
     var job: Job
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
 
     fun initScope() {
         job = SupervisorJob()
@@ -19,9 +22,5 @@ interface Scope : CoroutineScope {
 
     fun closeScope() {
         job.cancel()
-    }
-
-    object Impl : Scope {
-        override lateinit var job: Job
     }
 }

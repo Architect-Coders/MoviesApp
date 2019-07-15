@@ -33,7 +33,8 @@ class MoviesAdapter(private val listener: (Movie) -> Unit) : RecyclerView.Adapte
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind(movie: Movie) {
             itemView.movieTitle.text = movie.title
-            itemView.moviePoster.loadUrl("https://image.tmdb.org/t/p/w185/${movie.backdropPath}")
+            itemView.moviePoster.loadUrl("https://image.tmdb.org/t/p/w185/${movie.posterPath}")
+            itemView.imgFavouriteMovie.visibility = if (movie.favourite) View.VISIBLE else View.GONE
         }
     }
 }
