@@ -20,6 +20,9 @@ class MoviesRepository(
     }
 
     suspend fun getMovie(movieId: Int) = localDataSource.getMovie(movieId)
+<<<<<<< HEAD
 
     suspend fun update(movie: Movie) = localDataSource.update(movie)
+=======
+>>>>>>> master
 }

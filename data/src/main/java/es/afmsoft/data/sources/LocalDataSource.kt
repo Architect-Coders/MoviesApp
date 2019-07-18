@@ -7,5 +7,8 @@ interface LocalDataSource {
     suspend fun getPopularMovies(): List<Movie>
     suspend fun saveMovies(movies: List<Movie>)
     suspend fun getMovie(movieId: Int): Movie?
+<<<<<<< HEAD
     suspend fun update(movie: Movie)
+=======
+>>>>>>> master
 }
