@@ -24,8 +24,4 @@ class ServerDataSource : RemoteDataSource {
 }
 
 private fun MovieApi.convertToDomainMovie() =
-<<<<<<< HEAD
     Movie(id, title, backdropPath, posterPath, false, overview)
-=======
-    Movie(id, title, posterPath, backdropPath)
->>>>>>> master
