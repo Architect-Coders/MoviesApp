@@ -19,6 +19,13 @@ class MoviesRepository(
         return localDataSource.getPopularMovies()
     }
 
+    suspend fun refreshMovies(): List<Movie> {
+        val movies = remoteDataSource.getPopularMovies(apiKey, regionRepository)
+        localDataSource.saveMovies(movies)
+
+        return localDataSource.getPopularMovies()
+    }
+
     suspend fun getMovie(movieId: Int) = localDataSource.getMovie(movieId)
     suspend fun update(movie: Movie) = localDataSource.update(movie)
 }
