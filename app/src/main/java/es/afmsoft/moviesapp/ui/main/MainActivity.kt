@@ -10,9 +10,7 @@ import es.afmsoft.moviesapp.PermissionRequester
 import es.afmsoft.moviesapp.R
 import es.afmsoft.moviesapp.startActivity
 import es.afmsoft.moviesapp.ui.detail.DetailActivity
-import es.afmsoft.moviesapp.ui.detail.DetailViewModel
 import es.afmsoft.moviesapp.ui.main.MoviesListViewModel.UiModel
-import es.afmsoft.usecases.GetPopularMovies
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.scope.currentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -33,6 +31,10 @@ class MainActivity : AppCompatActivity() {
         moviesGrid.layoutManager = GridLayoutManager(this, MOVIES_PER_ROW)
         moviesGrid.adapter = adapter
 
+        swiperefresh.setOnRefreshListener {
+            viewModel.onListRefresh()
+        }
+
         viewModel.model.observe(this, Observer(::updateUi))
     }
 
@@ -41,7 +43,10 @@ class MainActivity : AppCompatActivity() {
         progressBar.visibility = if (model is UiModel.Loading) View.VISIBLE else View.GONE
 
         when (model) {
-            is UiModel.Content -> adapter.movies = model.movies
+            is UiModel.Content -> {
+                adapter.movies = model.movies
+                swiperefresh.isRefreshing = false
+            }
             is UiModel.Navigation -> startActivity<DetailActivity> { putExtra(DetailActivity.MOVIE, model.movie.id) }
             is UiModel.RequestLocationPermission ->
                 coarsePermissionRequester.request { viewModel.onCoarsePermissionRequested() }
