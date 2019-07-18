@@ -33,6 +33,12 @@ class MoviesListViewModel(private val getPopularMovies: GetPopularMovies) : Scop
         _model.value = UiModel.Navigation(movie)
     }
 
+    fun onListRefresh() {
+        launch {
+            _model.value = UiModel.Content(getPopularMovies.invoke())
+        }
+    }
+
     sealed class UiModel {
         object Loading : UiModel()
         object RequestLocationPermission : UiModel()

@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import es.afmsoft.data.repository.MoviesRepository
-import es.afmsoft.data.repository.RegionRepository
 import es.afmsoft.moviesapp.R
 import es.afmsoft.moviesapp.loadUrl
 import es.afmsoft.moviesapp.ui.detail.DetailViewModel.UiModel
