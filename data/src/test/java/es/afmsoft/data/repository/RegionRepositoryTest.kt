@@ -1,122 +1,64 @@
 package es.afmsoft.data.repository
 
-import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
-import es.afmsoft.data.sources.LocalDataSource
-import es.afmsoft.data.sources.RemoteDataSource
-import es.afmsoft.domain.Movie
+import es.afmsoft.data.sources.LocationDataSource
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers.any
-import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class MoviesRepositoryTest {
+class RegionRepositoryTest {
 
     @Mock
-    lateinit var localDataSource: LocalDataSource
+    lateinit var locationDataSource: LocationDataSource
 
     @Mock
-    lateinit var remoteDataSource: RemoteDataSource
+    lateinit var permissionChecker: PermissionChecker
 
-    @Mock
     lateinit var regionRepository: RegionRepository
-
-    lateinit var moviesRepository: MoviesRepository
-
-    var apiKey = "8979fea4ecc57850778fa624133234d8"
-
-    val mockedMovie = Movie(
-        0,
-        "Title",
-        "",
-        "",
-        false,
-        "Overview"
-    )
 
     @Before
     fun setUp() {
-        moviesRepository = MoviesRepository(localDataSource,
-            remoteDataSource,
-            apiKey,
-            regionRepository)
+        regionRepository = RegionRepository(locationDataSource, permissionChecker)
     }
 
     @Test
-    fun `getPopularMovies gets from local data source first`() {
+    fun `findLastRegion gets last region no data`() {
         runBlocking {
-            val localMovies = listOf(mockedMovie.copy(1))
+            whenever(permissionChecker.check(any())).thenReturn(true)
+            whenever(locationDataSource.findLastRegion()).thenReturn(null)
 
-            whenever(localDataSource.isEmpty()).thenReturn(false)
-            whenever(localDataSource.getPopularMovies()).thenReturn(localMovies)
+            val result = regionRepository.findLastRegion()
 
-            val result = moviesRepository.getPopularMovies()
-
-            assertEquals(localMovies, result)
+            assertEquals("US", result)
         }
     }
 
     @Test
-    fun `getPopularMovies gets from remote data source if no local data`() {
+    fun `findLastRegion gets last region`() {
         runBlocking {
-            val localMovies = listOf(mockedMovie.copy(1))
+            whenever(permissionChecker.check(any())).thenReturn(true)
+            whenever(locationDataSource.findLastRegion()).thenReturn("ES")
 
-            whenever(localDataSource.isEmpty()).thenReturn(true)
-            whenever(remoteDataSource.getPopularMovies(apiKey, regionRepository)).thenReturn(localMovies)
-            whenever(localDataSource.getPopularMovies()).thenReturn(localMovies)
+            val result = regionRepository.findLastRegion()
 
-            val result = moviesRepository.getPopularMovies()
-
-            assertEquals(localMovies, result)
-            verify(localDataSource).saveMovies(localMovies)
-            verify(localDataSource).getPopularMovies()
+            assertEquals("ES", result)
         }
     }
 
     @Test
-    fun `refreshMovies updates movies list`() {
+    fun `findLastRegion gets default region because no permission`() {
         runBlocking {
-            val localMovies = listOf(mockedMovie.copy(1))
+            whenever(permissionChecker.check(any())).thenReturn(false)
 
-            whenever(remoteDataSource.getPopularMovies(apiKey, regionRepository)).thenReturn(localMovies)
-            whenever(localDataSource.getPopularMovies()).thenReturn(localMovies)
+            val result = regionRepository.findLastRegion()
 
-            val result = moviesRepository.refreshMovies()
-
-            assertEquals(localMovies, result)
-            verify(localDataSource).saveMovies(localMovies)
-            verify(localDataSource).getPopularMovies()
-        }
-    }
-
-    @Test
-    fun `getMovie get movie by id`() {
-        runBlocking {
-            val movie = mockedMovie.copy(1)
-
-            whenever(localDataSource.getMovie(anyInt())).thenReturn(movie)
-
-            val result = moviesRepository.getMovie(1)
-
-            assertEquals(movie, result)
-            verify(localDataSource).getMovie(1)
-        }
-    }
-
-    @Test
-    fun `update updates a movie`() {
-        runBlocking {
-            val movie = mockedMovie.copy(1)
-
-            moviesRepository.update(movie)
-
-            verify(localDataSource).update(movie)
+            assertEquals("US", result)
         }
     }
 }

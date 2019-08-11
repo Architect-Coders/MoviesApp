@@ -4,6 +4,8 @@ apply plugin: 'kotlin'
 dependencies {
     implementation project(":domain")
     implementation project(":data")
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    testImplementation testLibs.values()
+    testImplementation kotlinLibs.values()
 }
 
