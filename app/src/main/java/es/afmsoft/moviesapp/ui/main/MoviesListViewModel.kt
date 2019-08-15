@@ -7,9 +7,13 @@ import es.afmsoft.domain.Movie
 import es.afmsoft.moviesapp.Scope
 import es.afmsoft.moviesapp.ScopedViewModel
 import es.afmsoft.usecases.GetPopularMovies
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
-class MoviesListViewModel(private val getPopularMovies: GetPopularMovies) : ScopedViewModel() {
+class MoviesListViewModel(
+    private val getPopularMovies: GetPopularMovies,
+    uiDispatcher: CoroutineDispatcher
+) : ScopedViewModel(uiDispatcher) {
 
     private val _model = MutableLiveData<UiModel>()
     val model: LiveData<UiModel>

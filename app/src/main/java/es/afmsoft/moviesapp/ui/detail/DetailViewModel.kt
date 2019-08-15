@@ -6,13 +6,15 @@ import es.afmsoft.domain.Movie
 import es.afmsoft.moviesapp.ScopedViewModel
 import es.afmsoft.usecases.GetMovie
 import es.afmsoft.usecases.ToggleFavouriteMovie
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 
 class DetailViewModel(
     private val movieId: Int,
     private val getMovie: GetMovie,
-    private val toggleFavouriteMovie: ToggleFavouriteMovie
-) : ScopedViewModel() {
+    private val toggleFavouriteMovie: ToggleFavouriteMovie,
+    uiDispatcher: CoroutineDispatcher
+) : ScopedViewModel(uiDispatcher) {
 
     private val _model = MutableLiveData<UiModel>()
     val model: LiveData<UiModel>
