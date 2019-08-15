@@ -1,15 +1,6 @@
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
-apply from: '../jacoco.gradle'
-project.parent.tasks["sonarqube"].dependsOn project.name + ":jacocoTestReportJava"
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    testImplementation testLibs.values()
-}
-
-sonarqube {
-    properties {
-        property "sonar.jacoco.reportPaths", allTestCoverageFile
-    }
 }
