@@ -1,11 +1,12 @@
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
+apply from: '../jacoco.gradle'
 
 dependencies {
     implementation project(":domain")
     implementation project(":data")
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     testImplementation testLibs.values()
     testImplementation kotlinLibs.values()
 }
-

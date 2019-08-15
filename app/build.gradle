@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'io.gitlab.arturbosch.detekt'
 apply plugin: 'kotlin-kapt'
+apply from: '../jacoco.gradle'
 
 android {
     compileSdkVersion 28
@@ -73,6 +74,9 @@ dependencies {
     testImplementation "androidx.room:room-testing:$room_version"
 }
 
-detekt {
-    baseline = file("$project.rootDir/detekt/baseline.xml")
+sonarqube {
+    properties {
+        property "sonar.android.lint.report", "./build/reports/lint-results.xml"
+        property "sonar.androidLint.reportPaths", "./build/reports/lint-results.xml"
+    }
 }
