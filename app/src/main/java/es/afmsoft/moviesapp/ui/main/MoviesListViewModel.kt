@@ -46,7 +46,7 @@ class MoviesListViewModel(
     sealed class UiModel {
         object Loading : UiModel()
         object RequestLocationPermission : UiModel()
-        class Content(val movies: List<Movie>) : UiModel()
-        class Navigation(val movie: Movie) : UiModel()
+        data class Content(val movies: List<Movie>) : UiModel()
+        data class Navigation(val movie: Movie) : UiModel()
     }
 }

@@ -2,6 +2,8 @@ package es.afmsoft.moviesapp.ui.detail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.reset
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import es.afmsoft.domain.Movie
@@ -9,6 +11,8 @@ import es.afmsoft.usecases.GetMovie
 import es.afmsoft.usecases.ToggleFavouriteMovie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -55,7 +59,6 @@ class DetailViewModelTest {
             whenever(getMovie.invoke(1)).thenReturn(movie)
 
             vm.model.observeForever(observer)
-
             verify(observer).onChanged(DetailViewModel.UiModel(movie))
         }
     }
@@ -69,8 +72,7 @@ class DetailViewModelTest {
             vm.model.observeForever(observer)
 
             vm.onToggleFavouriteMovieClicked()
-
-            verify(toggleFavouriteMovie).invoke(movie)
+            verify(observer). onChanged(DetailViewModel.UiModel(movie))
         }
     }
 }

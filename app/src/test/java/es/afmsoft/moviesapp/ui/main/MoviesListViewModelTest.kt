@@ -46,7 +46,6 @@ class MoviesListViewModelTest {
     fun `observing LiveData launches location permission request`() {
 
         vm.model.observeForever(observer)
-
         verify(observer).onChanged(MoviesListViewModel.UiModel.RequestLocationPermission)
     }
 
@@ -59,7 +58,6 @@ class MoviesListViewModelTest {
             vm.model.observeForever(observer)
 
             vm.onCoarsePermissionRequested()
-
             verify(observer).onChanged(MoviesListViewModel.UiModel.Loading)
         }
     }
@@ -72,9 +70,20 @@ class MoviesListViewModelTest {
             whenever(getPopularMovies.invoke()).thenReturn(movies)
 
             vm.model.observeForever(observer)
-
             vm.onCoarsePermissionRequested()
+            verify(observer).onChanged(MoviesListViewModel.UiModel.Content(movies))
+        }
+    }
 
+    @Test
+    fun `after refresh movies, getPopularMovies is called`() {
+
+        runBlocking {
+            val movies = listOf(mockedMovie.copy(id = 1))
+            whenever(getPopularMovies.invoke()).thenReturn(movies)
+
+            vm.model.observeForever(observer)
+            vm.onListRefresh()
             verify(observer).onChanged(MoviesListViewModel.UiModel.Content(movies))
         }
     }
