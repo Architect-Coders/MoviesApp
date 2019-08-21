@@ -7,7 +7,7 @@ interface MovieDao {
     @Query("select * from movie")
     fun getAll(): List<Movie>
 
-    @Query("select * from movie where id = :movieId")
+    @Query("select * from movie where movieId = :movieId")
     fun getMovie(movieId: Int): Movie?
 
     @Query("select count(id) from movie")

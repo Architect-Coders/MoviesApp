@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                 adapter.movies = model.movies
                 swiperefresh.isRefreshing = false
             }
-            is UiModel.Navigation -> startActivity<DetailActivity> { putExtra(DetailActivity.MOVIE, model.movie.id) }
+            is UiModel.Navigation -> startActivity<DetailActivity> { putExtra(DetailActivity.MOVIE, model.movie.movieId) }
             is UiModel.RequestLocationPermission ->
                 coarsePermissionRequester.request { viewModel.onCoarsePermissionRequested() }
         }

@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:statusBarBackground="@android:color/transparent"
@@ -36,6 +37,7 @@
                 android:id="@+id/movieDetailToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                tools:title="Movie name"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:layout_collapseMode="pin" />
 

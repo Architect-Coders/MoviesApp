@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class Movie(
     @PrimaryKey(autoGenerate = true) val id: Int,
+    @ColumnInfo(name = "movieId") val movieId: Int,
     @ColumnInfo(name = "title") val title: String?,
     @ColumnInfo(name = "backdrop_path") val backdropPath: String?,
     @ColumnInfo(name = "poster_path") val posterPath: String?,

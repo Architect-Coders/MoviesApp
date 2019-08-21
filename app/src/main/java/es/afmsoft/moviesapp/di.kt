@@ -11,6 +11,7 @@ import es.afmsoft.moviesapp.data.AndroidPermissionChecker
 import es.afmsoft.moviesapp.data.GpsLocationDataSource
 import es.afmsoft.moviesapp.data.database.MovieDatabase
 import es.afmsoft.moviesapp.data.database.RoomDataSource
+import es.afmsoft.moviesapp.data.server.MovieServer
 import es.afmsoft.moviesapp.data.server.ServerDataSource
 import es.afmsoft.moviesapp.ui.detail.DetailActivity
 import es.afmsoft.moviesapp.ui.detail.DetailViewModel
@@ -22,6 +23,8 @@ import es.afmsoft.usecases.RefreshMovies
 import es.afmsoft.usecases.ToggleFavouriteMovie
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -42,10 +45,16 @@ private val appModule = module {
     single(named("apiKey")) { androidApplication().getString(R.string.api_key) }
     single { MovieDatabase.build(get()) }
     factory<LocalDataSource> { RoomDataSource(get()) }
-    factory<RemoteDataSource> { ServerDataSource() }
+    factory<RemoteDataSource> { ServerDataSource(get()) }
     factory<LocationDataSource> { GpsLocationDataSource(get()) }
     factory<PermissionChecker> { AndroidPermissionChecker(get()) }
     single<CoroutineDispatcher> { Dispatchers.Main }
+    single(named("baseUrl")) { "https://api.themoviedb.org/3/"}
+    single { MovieServer(get(named("baseUrl")), get()) }
+    single { HttpLoggingInterceptor().run {
+        level = HttpLoggingInterceptor.Level.BODY
+        OkHttpClient.Builder().addInterceptor(this).build()
+    }}
 }
 
 val dataModule = module {
