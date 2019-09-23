@@ -28,6 +28,7 @@ class DetailIntegrationTests : AutoCloseKoinTest() {
 
     val mockedMovie = Movie(
         0,
+        0,
         "Title",
         "",
         "",

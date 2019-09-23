@@ -20,6 +20,7 @@ class MoviesListViewModelTest {
 
     val mockedMovie = Movie(
         0,
+        0,
         "Title",
         "",
         "",
