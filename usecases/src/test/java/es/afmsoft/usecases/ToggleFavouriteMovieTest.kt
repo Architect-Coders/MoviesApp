@@ -22,6 +22,7 @@ class ToggleFavouriteMovieTest {
 
     val mockedMovie = Movie(
         0,
+        0,
         "Title",
         "",
         "",

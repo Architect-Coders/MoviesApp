@@ -10,24 +10,14 @@ pipeline {
       post {
         always {
           junit '**/TEST-*.xml'
-
         }
-
       }
       steps {
-        sh 'sh gradlew testDebugUnitTest'
-      }
-    }
-    stage('Build APK') {
-      steps {
-        sh 'sh gradlew assembleDebug'
-        archiveArtifacts '**/*.apk'
+        sh 'sh gradlew unitTest'
       }
     }
-    stage('Static analysis') {
+    stage('Detekt') {
       steps {
-        // Run Lint and analyse the results
-        sh 'sh gradlew lintDebug'
         sh 'sh gradlew :app:detekt'
       }
 
@@ -35,8 +25,37 @@ pipeline {
         always {
           // Analyse the test results and update the build result as appropriate
           recordIssues(tools: [detekt(pattern: '**/detekt.xml')])
+        }
+      }
+    }
+    stage('Lint') {
+      steps {
+        // Run Lint and analyse the results
+        sh 'sh gradlew lintDebug'
+      }
+
+      post {
+        always {
+          // Analyse the test results and update the build result as appropriate
           androidLint pattern: '**/lint-results-*.xml'
         }
+      }
+    }
+    stage('Prepare Reports') {
+      steps {
+        sh 'sh gradlew jacocoMerge'
+        sh 'sh gradlew jacocoTestReport'
+      }
+    }
+    stage('Sonarqube') {
+      steps {
+        sh 'sh gradlew sonarqube'
+      }
+    }
+    stage('Build APK') {
+      steps {
+        sh 'sh gradlew assembleDebug'
+        archiveArtifacts '**/*.apk'
       }
     }
     stage('Deploy') {

@@ -9,7 +9,7 @@ buildscript {
         
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.2'
+        classpath 'com.android.tools.build:gradle:3.5.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7.1'
         // NOTE: Do not place your application dependencies here; they belong
@@ -83,7 +83,7 @@ def allTestCoverageFile = "$buildDir/jacoco/allTestCoverage.exec"
 
 task jacocoMerge(type: JacocoMerge) {
     destinationFile = file(allTestCoverageFile)
-    executionData = project.fileTree(dir: '.', includes: ['**/build/jacoco/*.exec'])
+    executionData = project.fileTree(dir: '.', includes: ['**/build/jacoco/*.exec', '**/*.ec'])
 }
 
 apply plugin: "org.sonarqube"
@@ -110,6 +110,10 @@ sonarqube {
 
         property "sonar.java.coveragePlugin", "jacoco"
         property "sonar.coverage.jacoco.xmlReportPaths", findAllReports()
+
+        property "sonar.exclusions", "src/androidTest/assets/**"
+        //property "sonar.testExecutionReportPaths", "${rootProject.projectDir}/app/build/test-results/testDebugUnitTest/*.xml"
+
     }
 }
 
