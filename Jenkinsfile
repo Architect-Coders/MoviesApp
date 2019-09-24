@@ -18,7 +18,7 @@ pipeline {
     }
     stage('Detekt') {
       steps {
-        sh 'sh gradlew :app:detekt'
+        sh 'sh gradlew detekt'
       }
 
       post {
