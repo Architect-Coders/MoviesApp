@@ -1,5 +1,6 @@
 package es.afmsoft.moviesapp
 
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.IdlingResource
 import com.jakewharton.espresso.OkHttp3IdlingResource

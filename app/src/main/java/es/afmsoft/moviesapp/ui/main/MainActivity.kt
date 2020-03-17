@@ -38,6 +38,11 @@ class MainActivity : AppCompatActivity() {
         viewModel.model.observe(this, Observer(::updateUi))
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.onListRefresh()
+    }
+
     private fun updateUi(model: UiModel) {
 
         progressBar.visibility = if (model is UiModel.Loading) View.VISIBLE else View.GONE

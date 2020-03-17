@@ -56,6 +56,14 @@ class UiTest : KoinTest {
 
             //MockResponse().fromJson(ApplicationProvider.getApplicationContext(), "popularmovies.json")
         )
+
+        mockWebServerRule.server.enqueue(
+            MockResponse().setResponseCode(200).setBody(readJsonFile("popularmovies.json"))
+        )
+
+        mockWebServerRule.server.enqueue(
+            MockResponse().setResponseCode(200).setBody(readJsonFile("popularmovies.json"))
+        )
     }
 
     fun readJsonFile(file: String): String {
